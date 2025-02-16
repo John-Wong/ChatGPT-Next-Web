@@ -32,13 +32,13 @@ jobs:
         run: "npm install -g yarn && yarn install"
 
       - name: Build step
-        run: "yarn build"
+        run: "yarn build && (cp -r public .next/standalone/public; cp -r .next/static .next/standalone/.next/static; cp -r .next/server .next/standalone/.next/server)"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "nexc"
-          entrypoint: "npm:start"
+          entrypoint: "./server.js"
           root: ".next/standalone"
           
           
